@@ -130,8 +130,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## 📬 Contact
+## 📄 License
 
-Yusuf Çalışır - [LinkedIn](https://www.linkedin.com/in/yusufcalisir/)
-
-Project Link: [https://github.com/yusufcalisir/GoalToday](https://github.com/yusufcalisir/GoalToday)
+Distributed under the MIT License. See `LICENSE` for more information.
