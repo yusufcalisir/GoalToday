@@ -101,7 +101,9 @@ The application includes a built-in performance monitoring and benchmarking suit
 ### 📊 Monitoring Tools
 - **Render Profiling**: Automated logging of component render durations via `PerformanceMonitor`.
 - **Execution Benchmarks**: Utilities in `src/utils/performance.ts` to track hardware and logic speed.
+- **Low-End Simulation**: Stress tests to ensure fluidity for users on legacy or entry-level devices.
 - **Automated Thresholds**: Performance tests that fail if critical operations (sorting/filtering) exceed frame-budget limits.
+
 
 ### 🧪 Running Performance Tests
 ```bash
