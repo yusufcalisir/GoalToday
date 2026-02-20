@@ -1,20 +1,36 @@
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { HabitProvider } from './src/context/HabitContext';
+import { RootNavigator } from './src/navigation/RootNavigator';
+import { ErrorBoundary } from './src/components/ErrorBoundary';
+import { initCrashReporting } from './src/utils/crashReporter';
+import { SyncQueue } from './src/utils/syncQueue';
+import { MigrationService } from './src/utils/migrations';
+import { featureFlags } from './src/utils/featureFlags';
+
+// Initialize Global Error Handler
+initCrashReporting();
+// Initialize Sync Queue (Network Listeners)
+SyncQueue.init();
 
 export default function App() {
+  useEffect(() => {
+    const initArchitecture = async () => {
+      await featureFlags.init();
+      await MigrationService.migrate();
+    };
+    initArchitecture();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ErrorBoundary>
+      <SafeAreaProvider>
+        <HabitProvider>
+          <StatusBar style="auto" />
+          <RootNavigator />
+        </HabitProvider>
+      </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
