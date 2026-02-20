@@ -8,6 +8,8 @@ import { initCrashReporting } from './src/utils/crashReporter';
 import { SyncQueue } from './src/utils/syncQueue';
 import { MigrationService } from './src/utils/migrations';
 import { featureFlags } from './src/utils/featureFlags';
+import { PerformanceMonitor } from './src/components/PerformanceMonitor';
+
 
 // Initialize Global Error Handler
 initCrashReporting();
@@ -27,8 +29,10 @@ export default function App() {
     <ErrorBoundary>
       <SafeAreaProvider>
         <HabitProvider>
-          <StatusBar style="auto" />
-          <RootNavigator />
+          <PerformanceMonitor id="MainApp">
+            <StatusBar style="auto" />
+            <RootNavigator />
+          </PerformanceMonitor>
         </HabitProvider>
       </SafeAreaProvider>
     </ErrorBoundary>

@@ -94,6 +94,22 @@
 
 ---
 
+## ⚡ Performance Testing
+
+The application includes a built-in performance monitoring and benchmarking suite to ensure a "High-Performance" user experience.
+
+### 📊 Monitoring Tools
+- **Render Profiling**: Automated logging of component render durations via `PerformanceMonitor`.
+- **Execution Benchmarks**: Utilities in `src/utils/performance.ts` to track hardware and logic speed.
+- **Automated Thresholds**: Performance tests that fail if critical operations (sorting/filtering) exceed frame-budget limits.
+
+### 🧪 Running Performance Tests
+```bash
+npm test src/__tests__/performance/
+```
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! 

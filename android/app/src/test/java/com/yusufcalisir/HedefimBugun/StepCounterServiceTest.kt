@@ -108,7 +108,37 @@ class StepCounterServiceTest {
         method.invoke(service, 1500)
 
         // Verifying broadcast - this is tricky with Robolectric but we can check if sendBroadcast was called
-        // We spied on the service above
         verify(service).sendBroadcast(any())
     }
+
+    @Test
+    fun `test onSensorChanged - triggers updateSteps`() {
+        // Mock SensorEvent
+        val sensorEvent = mock(SensorEvent::class.java)
+        val sensor = mock(Sensor)
+        `when`(sensor.type).thenReturn(Sensor.TYPE_STEP_COUNTER)
+        
+        // Use reflection to set values field (it's a public float array but can be tricky in mocks)
+        val field = SensorEvent::class.java.getField("values")
+        field.isAccessible = true
+        field.set(sensorEvent, floatArrayOf(2000f))
+        
+        // Mock the sensor field in SensorEvent
+        val sensorField = SensorEvent::class.java.getField("sensor")
+        sensorField.isAccessible = true
+        sensorField.set(sensorEvent, sensor)
+
+        // Setup prefs to have a base
+        sharedPreferences.edit()
+            .putString("lastSavedDay", sdf.format(Date()))
+            .putInt("baseSteps", 1000)
+            .apply()
+
+        // Call the listener method
+        service.onSensorChanged(sensorEvent)
+
+        // Verify result in prefs (2000 - 1000 = 1000)
+        assertEquals(1000, sharedPreferences.getInt("todaySteps", 0))
+    }
 }
+
